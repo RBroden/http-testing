@@ -1,0 +1,1 @@
+export { BookingListComponent } from './booking-list.component';
