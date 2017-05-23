@@ -43,7 +43,7 @@ describe('BookingService test suite', () => {
     );
 
     it('can instantiate service when inject service',
-        inject(
+        async(inject(
             [
                 BookingService,
                 ApiService,
@@ -58,18 +58,28 @@ describe('BookingService test suite', () => {
                 expect(service instanceof BookingService).toBe(true);
                 mockBackend.connections.subscribe( (connection: MockConnection) => {
                     connection.mockRespond(new Response(new ResponseOptions({
-                        body: JSON.stringify(mockResponse)
+                        body: responseWithJSON(mockResponse.data)
                     })));
                 });
 
-                service.getBookings().subscribe( (bookings: Booking[]) => {
-                    expect(bookings.length)
-                        .toEqual(mockResponseLength);
+                apiService.get('bookings').then( (response: any) => {
+                    console.log(response);
                 });
+
+                // service.getBookings().subscribe( (bookings: Booking[]) => {
+                //     expect(bookings.length)
+                //         .toEqual(mockResponseLength);
+                // });
         })
-    );    
+    ));    
 
 });
+
+function responseWithJSON(data: any) {
+    console.log('responseWithJSON');
+    console.log(data);
+    return JSON.stringify(data);
+}
 
 
 const mockApiService = {

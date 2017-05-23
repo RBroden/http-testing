@@ -26,8 +26,7 @@ export class BookingService {
         
         this.requestBookings()
             .then( (bookings) => {
-                this.bookings = bookings;
-                this.bookingList$.next(this.bookings);
+                this.setBookings(bookings)
             });
     }
 
